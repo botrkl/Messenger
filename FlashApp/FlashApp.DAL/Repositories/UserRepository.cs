@@ -17,5 +17,10 @@ namespace FlashApp.DAL.Repositories
             var searchedEntity = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
             return searchedEntity;
         }
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            var searchedEntity = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username);
+            return searchedEntity;
+        }
     }
 }

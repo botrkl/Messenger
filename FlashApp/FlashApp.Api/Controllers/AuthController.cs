@@ -52,7 +52,7 @@ namespace FlashApp.Api.Controllers
                 var userId = await _authenticationService.AuthenticateAsync(login.Username, login.Password);
                 var token = _jwtService.CreateJWT(userId,_configuration);
                 HttpContext.Session.SetString("Token", token);
-                return RedirectToAction("Main", "Home");
+                return Redirect("/chats");
             }
             catch (AuthException)
             {
@@ -83,7 +83,7 @@ namespace FlashApp.Api.Controllers
                 var userId = await _userService.AddUserAsync(addUserModel);
                 var token = _jwtService.CreateJWT(userId, _configuration);
                 HttpContext.Session.SetString("Token", token);
-                return RedirectToAction("Main", "Home");
+                return Redirect("/chats");
             }
             catch(RegisterException e)
             {

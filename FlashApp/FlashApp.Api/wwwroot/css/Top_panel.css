@@ -1,0 +1,49 @@
+﻿.top-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00cc99;
+    padding: 10px 20px;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.search-form {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.search-form form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-form button {
+    background-color: #009966;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.user-actions a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.user-actions a:hover {
+    text-decoration: underline;
+}

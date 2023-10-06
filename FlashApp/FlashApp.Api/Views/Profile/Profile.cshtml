@@ -1,0 +1,31 @@
+﻿@model FlashApp.BLL.Models.UserModel;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Profile.css" rel="stylesheet" />
+
+<div class="user-profile">
+    <div class="user-info">
+        <div class="user-info-item">
+            <span class="label">Username:</span>
+            <span class="value">@Model.Username</span>
+        </div>
+        <div class="user-info-item">
+            <span class="label">Nickname:</span>
+            <span class="value">@Model.Nickname</span>
+        </div>
+            <div class="user-info-item">
+                <span class="label">Email:</span>
+                    @if (Model.Email != null)
+                    {
+                        <span class="value">@Model.Email</span>
+                    }
+                    else
+                    {
+                        <span class="value">no info</span>
+                    }
+            </div>
+        <a href="/sendMessage" class="send-message-button">Send Message</a>
+    </div>
+</div>
+

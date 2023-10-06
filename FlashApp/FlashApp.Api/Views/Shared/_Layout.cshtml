@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/Top_panel.css" rel="stylesheet" />
+</head>
+<body>
+        <div class="top-panel">
+            <div class="search-form">
+                <form method="get" action="https://localhost:7270/profile/">
+                    <input type="text" id="usernameInput" name="username" placeholder="Enter username" />
+                    <button type="button" onclick="redirectToProfile()">Find Profile</button>
+                </form>
+            </div>
+            <div class="user-actions">
+                <a href="~/Chats">Chats</a>
+                <a href="~/Profile">Profile</a>
+                <a href="~/Logout">Log Out</a>
+            </div>
+        </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+
+<script>
+    function redirectToProfile() {
+        const username = document.getElementById('usernameInput').value;
+        const url = `https://localhost:7270/profile/${username}`;
+        window.location.href = url;
+    }
+</script>
