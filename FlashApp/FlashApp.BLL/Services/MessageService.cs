@@ -17,10 +17,10 @@ namespace FlashApp.BLL.Services
             _mapper = mapper;
             _messageRepository = messageRepository;
         }
-        public async Task AddMessageAsync(AddMessageModel model)
+        public async Task<Guid> AddMessageAsync(AddMessageModel model)
         {
             var addMessage = _mapper.Map<Message>(model);
-            await _messageRepository.AddAsync(addMessage);
+            return await _messageRepository.AddAsync(addMessage);
         }
         public async Task DeleteMessageAsync(Guid id)
         {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 
 namespace FlashApp.BLL.Services
@@ -14,9 +15,8 @@ namespace FlashApp.BLL.Services
             var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256Signature);
             var claims = new List<Claim>
             {
-             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString())
             };
-
             var token = new JwtSecurityToken(issuer: configuration["JwtSettings:Issuer"], audience: configuration["JwtSettings:Audience"], claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

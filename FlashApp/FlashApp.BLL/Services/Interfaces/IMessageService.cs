@@ -8,7 +8,7 @@ namespace FlashApp.BLL.Services.Interfaces
     {
         public Task<MessageModel> GetByIdAsync(Guid id);
         public Task DeleteMessageAsync(Guid id);
-        public Task AddMessageAsync(AddMessageModel model);
+        public Task<Guid> AddMessageAsync(AddMessageModel model);
         public Task UpdateMessageAsync(UpdateMessageModel model);
     }
 }

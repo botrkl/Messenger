@@ -17,10 +17,11 @@ namespace FlashApp.DAL.Repositories
             var searchedEntity = await _dbContext.Set<TEntity>().FirstAsync(x => x.Id == id);
             return searchedEntity;
         }
-        public async Task AddAsync(TEntity entity)
+        public async Task<Guid> AddAsync(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
+            return entity.Id;
         }
         public async Task DeleteAsync(Guid id)
         {

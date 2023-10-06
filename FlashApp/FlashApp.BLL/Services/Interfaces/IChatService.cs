@@ -8,7 +8,7 @@ namespace FlashApp.BLL.Services.Interfaces
     {
         public Task<ChatModel> GetByIdAsync(Guid id);
         public Task DeleteChatAsync(Guid id);
-        public Task AddChatAsync(AddChatModel model);
+        public Task<Guid> AddChatAsync(AddChatModel model);
         public Task UpdateChatAsync(UpdateChatModel model);
     }
 }

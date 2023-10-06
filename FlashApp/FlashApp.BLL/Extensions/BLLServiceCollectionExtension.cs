@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using FlashApp.BLL.Services;
 using FlashApp.BLL.Services.Interfaces;
+using FlashApp.BLL.Mapping;
 
 namespace FlashApp.BLL.Extensions
 {
@@ -14,7 +15,10 @@ namespace FlashApp.BLL.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IMessageService, MessageService>();
-            //add mapping
+
+            services.AddAutoMapper(typeof(ChatMapperProfile));
+            services.AddAutoMapper(typeof(MessageMapperProfile));
+            services.AddAutoMapper(typeof(UserMapperProfile));
         }
     }
 }

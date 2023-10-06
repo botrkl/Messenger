@@ -17,10 +17,10 @@ namespace FlashApp.BLL.Services
             _mapper = mapper;
             _chatRepository = chatRepository;
         }
-        public async Task AddChatAsync(AddChatModel model)
+        public async Task<Guid> AddChatAsync(AddChatModel model)
         {
             var addChat = _mapper.Map<Chat>(model);
-            await _chatRepository.AddAsync(addChat);
+            return await _chatRepository.AddAsync(addChat);
         }
         public async Task DeleteChatAsync(Guid id)
         {

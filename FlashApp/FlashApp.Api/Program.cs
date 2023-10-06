@@ -4,6 +4,7 @@ using FlashApp.BLL.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FlashApp.Api.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
         };
     });
+builder.Services.AddAutoMapper(typeof(WebMappingProfile));
 
 builder.Services.InjectDALServices(builder.Configuration);
 builder.Services.InjectBLLServices(builder.Configuration);
@@ -66,7 +68,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}");
+        pattern: "{controller=AuthController}/{action=Index}");
 });
 
 app.MapControllers();

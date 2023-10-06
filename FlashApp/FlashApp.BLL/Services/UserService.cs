@@ -5,6 +5,7 @@ using FlashApp.DAL.Repositories.Interfaces;
 using AutoMapper;
 using FlashApp.BLL.Services.Interfaces;
 using FlashApp.BLL.Models;
+using FlashApp.BLL.Exceptions;
 
 namespace FlashApp.BLL.Services
 {
@@ -17,10 +18,15 @@ namespace FlashApp.BLL.Services
             _mapper = mapper;
             _userRepository = userRepository;
         }
-        public async Task AddUserAsync(AddUserModel model)
+        public async Task<Guid> AddUserAsync(AddUserModel model)
         {
+            var userList =  await _userRepository.GetAllAsync();
+            if(userList.FirstOrDefault(x=>x.Username==model.Username) is not null)
+            {
+                throw new RegisterException();
+            }
             var addUser = _mapper.Map<User>(model);
-            await _userRepository.AddAsync(addUser);
+            return await _userRepository.AddAsync(addUser);
         }
         public async Task DeleteUserAsync(Guid id)
         {

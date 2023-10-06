@@ -12,13 +12,9 @@ namespace FlashApp.DAL.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<User> GetUserByCredentialsAsync(string username, string password)
+        public async Task<User?> GetUserByCredentialsAsync(string username, string password)
         {
             var searchedEntity = await _dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
-            if (searchedEntity is null)
-            {
-                throw new ArgumentNullException($"{nameof(searchedEntity)} with this parametr not found.", nameof(UserRepository));
-            }
             return searchedEntity;
         }
     }
