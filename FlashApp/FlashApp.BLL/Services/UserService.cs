@@ -53,5 +53,6 @@ namespace FlashApp.BLL.Services
             }
             return _mapper.Map<UserModel>(wantedUser);
         }
+
     }
 }

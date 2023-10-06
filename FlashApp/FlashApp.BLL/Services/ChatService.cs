@@ -37,5 +37,17 @@ namespace FlashApp.BLL.Services
             _mapper.Map(model, tempChat);
             await _chatRepository.UpdateAsync(tempChat);
         }
+        public async Task<IEnumerable<ChatModel>?> GetChatsByUserIdAsync(Guid userId)
+        {
+            var chats = await _chatRepository.GetChatsByUserIdAsync(userId);
+            if (chats == null)
+            {
+                return null;
+            }
+            chats = chats.OrderByDescending(chat => chat.Messages.Max(message => message.Creation_Time)).ToList();
+
+            var chatModels = _mapper.Map<IEnumerable<ChatModel>>(chats);
+            return chatModels;
+        }
     }
 }
