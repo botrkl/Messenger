@@ -8,6 +8,8 @@ namespace FlashApp.DAL.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Chat> builder)
         {
+            builder.HasKey(x => x.Id);
+
             builder
                 .HasMany(chat => chat.ChatUsers)
                 .WithOne(chatUser => chatUser.Chat)

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashApp.Api", "FlashApp.Api\FlashApp.Api.csproj", "{158CBB67-C566-41BF-A7C1-6E6B6B1E90BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashApp.DAL", "FlashApp.DAL\FlashApp.DAL.csproj", "{E3B864AD-A91A-4657-918A-FE4D42D6B71B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashApp.DAL", "FlashApp.DAL\FlashApp.DAL.csproj", "{E3B864AD-A91A-4657-918A-FE4D42D6B71B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashApp.BLL", "FlashApp.BLL\FlashApp.BLL.csproj", "{C4ABE484-53A2-4AB0-A117-61BE697189C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E3B864AD-A91A-4657-918A-FE4D42D6B71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3B864AD-A91A-4657-918A-FE4D42D6B71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3B864AD-A91A-4657-918A-FE4D42D6B71B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4ABE484-53A2-4AB0-A117-61BE697189C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4ABE484-53A2-4AB0-A117-61BE697189C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4ABE484-53A2-4AB0-A117-61BE697189C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4ABE484-53A2-4AB0-A117-61BE697189C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
