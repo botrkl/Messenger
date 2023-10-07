@@ -17,9 +17,9 @@ namespace FlashApp.DAL.Repositories
         {
             return await _dbContext.ChatUser
                 .Where(chatUser => chatUser.UserId == userId)
-                .Select(chatUser => chatUser.Chat)
-                .Include(chat => chat.Messages)
+                .Include(chat => chat.Chat.Messages)
                 .ThenInclude(chatUser => chatUser.User)
+                .Select(chatUser => chatUser.Chat)
                 .ToListAsync();
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlashApp.Api.ViewComponents
 {
+    [ViewComponent(Name = "ChatsViewComponents")]
     public class ChatsViewComponents:ViewComponent
     {
         private IJwtService _jwtService;
@@ -19,7 +20,7 @@ namespace FlashApp.Api.ViewComponents
             var token = HttpContext.Session.GetString("Token");
             var userId = _jwtService.GetId(token);
             var chats = await _chatService.GetChatsByUserIdAsync(userId);
-            return View(chats);
+            return View("Default", chats);
         }
     }
 }

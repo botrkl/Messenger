@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FlashApp.Api.Mapping;
+using FlashApp.Api.ViewComponents;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,11 @@ builder.Services.InjectDALServices(builder.Configuration);
 builder.Services.InjectBLLServices(builder.Configuration);
 
 var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
 using (var scope = app.Services.CreateScope())
 {

@@ -30,7 +30,7 @@ namespace FlashApp.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chat");
+                    b.ToTable("Chat", (string)null);
                 });
 
             modelBuilder.Entity("FlashApp.DAL.Entities.ChatUser", b =>
@@ -45,7 +45,7 @@ namespace FlashApp.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChatUser");
+                    b.ToTable("ChatUser", (string)null);
                 });
 
             modelBuilder.Entity("FlashApp.DAL.Entities.Message", b =>
@@ -74,7 +74,7 @@ namespace FlashApp.DAL.Migrations
 
                     b.HasIndex("User_id");
 
-                    b.ToTable("Message");
+                    b.ToTable("Message", (string)null);
                 });
 
             modelBuilder.Entity("FlashApp.DAL.Entities.User", b =>
@@ -104,7 +104,7 @@ namespace FlashApp.DAL.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("FlashApp.DAL.Entities.ChatUser", b =>

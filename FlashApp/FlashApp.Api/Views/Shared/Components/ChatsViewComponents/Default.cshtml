@@ -1,0 +1,27 @@
+﻿@using FlashApp.BLL.Models;
+@using FlashApp.Api.ViewComponents;
+@model IEnumerable<ChatModel>?;
+<link href="~/css/ChatViewComponents_Default.css" rel="stylesheet" />
+
+<div class="sidebar">
+    @if (Model != null && Model.Any())
+    {
+        <div class="chat-list">
+            @foreach (var chat in Model)
+            {
+                string lastMessege = chat.messages.Any() ? chat.messages.Last().Content : null;
+                string username = chat.users.Where(x => x.Id == chat.messages?.Last().User_id).Select(x => x.Username).FirstOrDefault();
+                <div class="chat-item">
+                    <a href="/chats/@chat.Id">
+                        <h5>@username</h5>
+                        <p>@(lastMessege ?? "No messages")</p>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-data-message">So quite...</p>
+    }
+</div>
