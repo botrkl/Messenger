@@ -12,10 +12,12 @@ namespace FlashApp.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IChatRepository _chatRepository;
-        public ChatService(IMapper mapper, IChatRepository chatRepository)
+        private readonly IChatUserRepository _chatUserRepository;
+        public ChatService(IMapper mapper, IChatRepository chatRepository, IChatUserRepository chatUserRepository)
         {
             _mapper = mapper;
             _chatRepository = chatRepository;
+            _chatUserRepository = chatUserRepository;
         }
         public async Task<Guid> AddChatAsync(AddChatModel model)
         {
@@ -40,14 +42,34 @@ namespace FlashApp.BLL.Services
         public async Task<IEnumerable<ChatModel>?> GetChatsByUserIdAsync(Guid userId)
         {
             var chats = await _chatRepository.GetChatsByUserIdAsync(userId);
-            if (chats == null)
+            if (chats.Count()==0)
             {
                 return null;
             }
-            chats = chats.OrderByDescending(chat => chat.Messages.Max(message => message.Creation_Time)).ToList();
+            var c  = chats.Where(x=>x.Messages.Count()>0).OrderByDescending(chat => chat.Messages.Max(message => message.Creation_Time)).ToList();
+            var b = chats.Where(x => x.Messages.Count() == 0).ToList();
 
-            var chatModels = _mapper.Map<IEnumerable<ChatModel>>(chats);
+            c.AddRange(b);
+
+            var chatModels = _mapper.Map<IEnumerable<ChatModel>?>(chats);
             return chatModels;
+        }
+        public async Task<Guid> GetChatByUsersIdAsync(Guid currentUserId, Guid userId)
+        {
+            var chatId = await _chatRepository.GetChatByUsersIdAsync(currentUserId, userId);
+            if(chatId != null && chatId != Guid.Empty)
+            {
+                return (Guid)chatId;
+            }
+            else
+            {
+                var newChatId = await _chatRepository.AddAsync(new Chat());
+
+                await _chatUserRepository.AddAsync(new ChatUser { ChatId = newChatId, UserId = currentUserId });
+                await _chatUserRepository.AddAsync(new ChatUser { ChatId = newChatId, UserId = userId });
+                
+                return newChatId;
+            }
         }
     }
 }

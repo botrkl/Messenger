@@ -13,7 +13,7 @@ namespace FlashApp.DAL.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<IEnumerable<Chat>?> GetChatsByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<Chat>> GetChatsByUserIdAsync(Guid userId)
         {
             return await _dbContext.ChatUser
                 .Where(chatUser => chatUser.UserId == userId)
@@ -21,6 +21,17 @@ namespace FlashApp.DAL.Repositories
                 .ThenInclude(chatUser => chatUser.User)
                 .Select(chatUser => chatUser.Chat)
                 .ToListAsync();
+        }
+        public async Task<Guid?> GetChatByUsersIdAsync(Guid currentUserId, Guid userId)
+        {
+            var chat = await _dbContext.ChatUser
+                .Where(chatUser => chatUser.UserId == currentUserId || chatUser.UserId == userId)
+                .GroupBy(chatUser => chatUser.ChatId)
+                .Where(group => group.Count() == 2) 
+                .Select(group => group.Key)
+                .FirstOrDefaultAsync();
+
+            return chat;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace FlashApp.BLL.Services
             var wantedUser = await _userRepository.GetUserByUsernameAsync(username);
             if(wantedUser is null)
             {
-                throw new Exception();
+                throw new UserDoesNotExistException();
             }
             return _mapper.Map<UserModel>(wantedUser);
         }

@@ -9,12 +9,11 @@
         <div class="chat-list">
             @foreach (var chat in Model)
             {
-                string lastMessege = chat.messages.Any() ? chat.messages.Last().Content : null;
-                string username = chat.users.Where(x => x.Id == chat.messages?.Last().User_id).Select(x => x.Username).FirstOrDefault();
+                
                 <div class="chat-item">
-                    <a href="/chats/@chat.Id">
-                        <h5>@username</h5>
-                        <p>@(lastMessege ?? "No messages")</p>
+                    <a href="/chat/@chat.Id">
+                        @* print last messege and username *@
+                        Send mess
                     </a>
                 </div>
             }

@@ -1,4 +1,4 @@
-﻿@model FlashApp.BLL.Models.UserModel;
+﻿@model FlashApp.BLL.Models.UserModel?;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,7 +6,9 @@
 
 <div class="user-profile">
     <div class="user-info">
-        <div class="user-info-item">
+        @if(Model is not null)
+        {
+            <div class="user-info-item">
             <span class="label">Username:</span>
             <span class="value">@Model.Username</span>
         </div>
@@ -25,7 +27,12 @@
                         <span class="value">no info</span>
                     }
             </div>
-        <a href="/chat" class="send-message-button">Send Message</a>
+            <a href="/send-message?id=@Model.Id" class="send-message-button">Send Message</a>
+        }
+        else
+        {
+            <p>User with this username doesn't exist</p>
+        }
     </div>
 </div>
 

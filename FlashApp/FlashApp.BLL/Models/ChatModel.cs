@@ -6,6 +6,6 @@ namespace FlashApp.BLL.Models
     {
         public string Id { get; set; }
         public ICollection<UserModel> users { get; set; }
-        public ICollection<MessageModel> messages { get; set; }
+        public ICollection<MessageModel>? messages { get; set; }
     }
 }
