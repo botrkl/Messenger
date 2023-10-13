@@ -15,7 +15,7 @@ namespace FlashApp.BLL.Services
             var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256Signature);
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
             };
             var token = new JwtSecurityToken(issuer: configuration["JwtSettings:Issuer"], audience: configuration["JwtSettings:Audience"], claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);

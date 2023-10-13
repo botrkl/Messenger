@@ -2,6 +2,8 @@
 using FlashApp.DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace FlashApp.Api.Controllers
 {
@@ -19,16 +21,17 @@ namespace FlashApp.Api.Controllers
 
         [Route("/chats")]
         [HttpGet]
-        public async Task<IActionResult> Chats()
+        public IActionResult Chats()
         {
             return View();
         }
         
-        [Route("/chat/{id}")]
+        [Route("/chat/{chatId}")]
         [HttpGet]
-        public async Task<IActionResult> Chat(Guid chatId)
+        public async Task<IActionResult> Chat([FromRoute] Guid chatId)
         {
-            return View();
+            var chat = await _chatService.GetChatByIdWithUsersAndMessegesAsync(chatId);
+            return View(chat);
         }
 
         [Route("/send-message")]
@@ -36,6 +39,10 @@ namespace FlashApp.Api.Controllers
         {
             var token = HttpContext.Session.GetString("Token");
             var currentUserId = _jwtService.GetId(token);
+            if (currentUserId.Equals(id))
+            {
+                return Redirect("/chats/");
+            }
             var chatId = await _chatService.GetChatByUsersIdAsync(currentUserId, id);
             return Redirect($"/chat/{chatId}");
         }

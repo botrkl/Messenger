@@ -33,7 +33,7 @@ namespace FlashApp.Api.Controllers
 
         [Route("/login")]
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public  IActionResult Login()
         {
             return View();
         }
@@ -63,7 +63,7 @@ namespace FlashApp.Api.Controllers
 
         [Route("/register")]
         [HttpGet]
-        public async Task<IActionResult> Register()
+        public  IActionResult Register()
         {
             return View();
         }

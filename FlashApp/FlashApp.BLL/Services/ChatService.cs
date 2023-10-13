@@ -5,6 +5,8 @@ using FlashApp.BLL.Models;
 using FlashApp.DAL.Entities;
 using FlashApp.DAL.Repositories.Interfaces;
 using FlashApp.BLL.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace FlashApp.BLL.Services
 {
@@ -39,7 +41,7 @@ namespace FlashApp.BLL.Services
             _mapper.Map(model, tempChat);
             await _chatRepository.UpdateAsync(tempChat);
         }
-        public async Task<IEnumerable<ChatModel>?> GetChatsByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<ChatModel>> GetChatsByUserIdAsync(Guid userId)
         {
             var chats = await _chatRepository.GetChatsByUserIdAsync(userId);
             if (chats.Count()==0)
@@ -51,7 +53,7 @@ namespace FlashApp.BLL.Services
 
             c.AddRange(b);
 
-            var chatModels = _mapper.Map<IEnumerable<ChatModel>?>(chats);
+            var chatModels = _mapper.Map<IEnumerable<ChatModel>>(chats);
             return chatModels;
         }
         public async Task<Guid> GetChatByUsersIdAsync(Guid currentUserId, Guid userId)
@@ -70,6 +72,11 @@ namespace FlashApp.BLL.Services
                 
                 return newChatId;
             }
+        }
+        public async Task<ChatModel> GetChatByIdWithUsersAndMessegesAsync(Guid chatId)
+        {
+            var chat = await _chatRepository.GetChatByIdWithUsersAndMessegesAsync(chatId);
+            return _mapper.Map<ChatModel>(chat);
         }
     }
 }
