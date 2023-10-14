@@ -1,6 +1,4 @@
-﻿using FlashApp.DAL.Entities;
-
-namespace FlashApp.BLL.Models
+﻿namespace FlashApp.BLL.Models
 {
     public class ChatModel
     {

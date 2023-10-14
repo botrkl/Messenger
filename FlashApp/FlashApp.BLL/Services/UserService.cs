@@ -37,7 +37,6 @@ namespace FlashApp.BLL.Services
             var wantedUser = await _userRepository.GetByIdAsync(id);
             return _mapper.Map<UserModel>(wantedUser);
         }
-
         public async Task UpdateUserAsync(UpdateUserModel model)
         {
             var tempUser = await _userRepository.GetByIdAsync(Guid.Parse(model.Id));
@@ -53,6 +52,5 @@ namespace FlashApp.BLL.Services
             }
             return _mapper.Map<UserModel>(wantedUser);
         }
-
     }
 }

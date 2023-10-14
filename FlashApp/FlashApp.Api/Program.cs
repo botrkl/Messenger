@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FlashApp.Api.Mapping;
-using FlashApp.Api.ViewComponents;
 
 var builder = WebApplication.CreateBuilder(args);
 

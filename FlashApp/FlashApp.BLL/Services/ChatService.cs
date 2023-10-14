@@ -5,8 +5,6 @@ using FlashApp.BLL.Models;
 using FlashApp.DAL.Entities;
 using FlashApp.DAL.Repositories.Interfaces;
 using FlashApp.BLL.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace FlashApp.BLL.Services
 {
@@ -41,20 +39,26 @@ namespace FlashApp.BLL.Services
             _mapper.Map(model, tempChat);
             await _chatRepository.UpdateAsync(tempChat);
         }
-        public async Task<IEnumerable<ChatModel>> GetChatsByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<ChatShortcut>> GetChatsByUserIdAsync(Guid userId)
         {
             var chats = await _chatRepository.GetChatsByUserIdAsync(userId);
-            if (chats.Count()==0)
+            if (chats.Count() == 0)
             {
-                return null;
+                return new List<ChatShortcut>();
             }
-            var c  = chats.Where(x=>x.Messages.Count()>0).OrderByDescending(chat => chat.Messages.Max(message => message.Creation_Time)).ToList();
-            var b = chats.Where(x => x.Messages.Count() == 0).ToList();
-
-            c.AddRange(b);
-
             var chatModels = _mapper.Map<IEnumerable<ChatModel>>(chats);
-            return chatModels;
+
+            var chatPanel = chatModels.Select(x =>
+                new ChatShortcut
+                {
+                    chatId = Guid.Parse(x.Id),
+                    username = x.users.First(x => Guid.Parse(x.Id) != userId).Username,
+                    timeOfLastMessage = x.messages?.OrderByDescending(x => x.Creation_Time).FirstOrDefault()?.Creation_Time,
+                    lastMessage = x.messages?.OrderByDescending(x => x.Creation_Time).FirstOrDefault()?.Content ?? "No messages here yet..."
+                })
+                .OrderByDescending(x => x.timeOfLastMessage ?? null);
+
+            return chatPanel;
         }
         public async Task<Guid> GetChatByUsersIdAsync(Guid currentUserId, Guid userId)
         {

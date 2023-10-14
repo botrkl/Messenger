@@ -1,9 +1,6 @@
 ﻿using FlashApp.BLL.Services.Interfaces;
-using FlashApp.DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace FlashApp.Api.Controllers
 {
@@ -16,7 +13,6 @@ namespace FlashApp.Api.Controllers
         {
             _jwtService = jwtService;
             _chatService = chatService;
-
         }
 
         [Route("/chats")]

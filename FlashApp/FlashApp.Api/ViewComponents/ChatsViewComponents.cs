@@ -1,7 +1,4 @@
-﻿using FlashApp.BLL.Exceptions;
-using FlashApp.BLL.Models;
-using FlashApp.BLL.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using FlashApp.BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlashApp.Api.ViewComponents

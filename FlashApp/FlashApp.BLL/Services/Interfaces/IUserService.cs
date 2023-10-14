@@ -1,7 +1,6 @@
 ﻿using FlashApp.BLL.Models.AddModels;
 using FlashApp.BLL.Models.UpdateModels;
 using FlashApp.BLL.Models;
-using FlashApp.DAL.Entities;
 
 namespace FlashApp.BLL.Services.Interfaces
 {

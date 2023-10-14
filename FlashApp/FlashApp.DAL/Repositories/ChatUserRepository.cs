@@ -1,12 +1,6 @@
 ﻿using FlashApp.DAL.Context;
 using FlashApp.DAL.Entities;
 using FlashApp.DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlashApp.DAL.Repositories
 {
