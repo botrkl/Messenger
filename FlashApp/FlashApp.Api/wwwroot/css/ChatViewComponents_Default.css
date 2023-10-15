@@ -1,7 +1,6 @@
 ﻿.left-panel {
     width: 20%;
-        height: 100%;
-    background-color: #333;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -11,22 +10,25 @@
     float: left;
 }
 
-.left-panel button {
-    height: 75px;
-    width: 100%;
-    border: none;
-    background-color: #555;
-    color: #fff;
-    text-align: left;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-bottom: 1px solid #444;
-    padding: 0px;
-    margin-left: 0px;
-    border: 0px;
-}
+    .left-panel button {
+        height: 75px;
+        width: 100%;
+        border: none;
+        background-color: rgba(188, 255, 208, 0.7);
+        color: #000;
+        text-align: left;
+        padding: 10px;
+        font-size: 16px;
+        border-bottom: 1px solid #444;
+        padding: 0px;
+        margin-left: 0px;
+        border: 0px;
+        cursor: pointer;
+    }
 
 .left-panel button:last-child {
     border-bottom: none;
 }
+        .left-panel button:hover {
+            background-color: #04b57a;
+        }

@@ -1,4 +1,5 @@
-﻿using FlashApp.BLL.Services.Interfaces;
+﻿using FlashApp.Api.Models;
+using FlashApp.BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,9 @@ namespace FlashApp.Api.Controllers
         public async Task<IActionResult> Chat([FromRoute] Guid chatId)
         {
             var chat = await _chatService.GetChatByIdWithUsersAndMessegesAsync(chatId);
-            return View(chat);
+            var token = HttpContext.Session.GetString("Token");
+            var currentUserId = _jwtService.GetId(token);
+            return View(new ChatViewModel (){ chat = chat, currentUserId = currentUserId });
         }
 
         [Route("/send-message")]
