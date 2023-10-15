@@ -37,7 +37,7 @@ namespace FlashApp.Api.Controllers
             var currentUserId = _jwtService.GetId(token);
             if (currentUserId.Equals(id))
             {
-                return Redirect("/chats/");
+                return Redirect("/chats");
             }
             var chatId = await _chatService.GetChatByUsersIdAsync(currentUserId, id);
             return Redirect($"/chat/{chatId}");

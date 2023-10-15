@@ -4,19 +4,15 @@
 }
 <style>
     .chat-container {
-        width: 100%; /* Ширина контейнера */
-        height: 100%; /* Высота контейнера */
-        display: flex; /* Использование Flexbox для выравнивания сообщений */
-        flex-direction: column; /* Основная ориентация - вертикальная */
-    }
-
-        .chat-container h2 {
-            text-align: center; /* Выравнивание текста по центру */
-            background-color: #007bff; /* Цвет фона заголовка */
-            color: white; /* Цвет текста заголовка */
-            padding: 10px; /* Внутренний отступ заголовка */
-        }
-
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        border: 0px;
+        margin-left: 20%;
+    }   
     .messages {
         flex-grow: 1; /* Занимать всю доступную высоту */
         overflow-y: auto; /* Включить вертикальную прокрутку, если сообщений много */
@@ -24,17 +20,14 @@
         display: flex; /* Использование Flexbox для выравнивания сообщений */
         flex-direction: column; /* Основная ориентация - вертикальная */
     }
-
     .message-text {
         margin: 0; /* Убрать внутренний отступ текста */
     }
-
 </style>
 
 <div class="chat-container">
     @if (Model != null)
     {
-        <h2>Chat: @Model.Id</h2>
         <div class="messages">
             @foreach (var message in Model.messages.OrderBy(m => m.Creation_Time))
             {
@@ -43,5 +36,9 @@
                 </div>
             }
         </div>
+    }
+    else
+    {
+        <p>No messages here yet...</p>
     }
 </div>

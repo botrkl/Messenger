@@ -1,12 +1,12 @@
 ﻿@using FlashApp.Api.ViewComponents;
 <!DOCTYPE html>
 <style>
-    .SomeClass{
-        margin-left: 20%;
-    }
     body {
         display: block;
         margin: 0px;
+    }
+    .top{
+        margin-top:45px;
     }
 </style>
 
@@ -14,14 +14,15 @@
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
+
 <body>
     @await Html.PartialAsync("_TopPanel")
-    <div>
+
+    <div class="top">
         @await Component.InvokeAsync("ChatsViewComponents")
-    </div>
-    <div class="SomeClass">
         @RenderBody()
     </div>
+
 </body>
 </html>
 
