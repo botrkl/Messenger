@@ -77,7 +77,7 @@
 
     /* Стиль для поля ввода текста */
     .message-input-text {
-        width:1300px;
+        width:1000px;
         flex-grow: 1;
         height: 40px;
         border: 1px solid #ccc;
@@ -117,15 +117,9 @@
             }
         </div>
     }
-    else
-    {
-        <p>No messages here yet...</p>
-    }
     <div class="message-input-panel">
-        <form method="post" action="/chat/send">
             <input type="text" class="message-input-text"  name="messageText" placeholder="Type your message..." />
             <button class="message-send-button" type="submit">Send</button>
-        </form>
     </div>
 </div>
 
