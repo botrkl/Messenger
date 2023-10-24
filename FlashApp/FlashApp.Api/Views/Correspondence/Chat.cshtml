@@ -1,113 +1,16 @@
 ﻿@model FlashApp.Api.Models.ChatViewModel;
+@using FlashApp.BLL.Models;
 
- @{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .chat-container {
-        width: 80%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: stretch;
-        border: 0px;
-        margin-left: 20%;
-    }
+<link href="~/css/Chat.css" rel="stylesheet" />
 
-    .messages {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 10px;
-        display: flex;
-/*         flex-direction: column;
- */        display: block;
-    }
-
-    .message {
-/*         flex-grow: 1;
- */        border: 1px solid #ccc;
-        padding: 10px;
-        margin: 5px 0;
-        word-wrap: break-word;
-        white-space: normal;
-        clear: both;
-        display: inline-block;
-    }
-
-    .message.sent {
-        background-color: #007bff;
-        color: white;
-        float: right;
-        clear: both;
-    }
-
-    .message.received {
-        background-color: #f2f2f2;
-        color: #333;
-            float: left;
-            clear: both;
-    }
-
-    .message-username {
-        font-size: 12px;
-        margin-bottom: 5px;
-    }
-
-    .message-content {
-        font-size: 16px;
-        display: inline-block;
-    }
-
-    .message-time {
-        font-size: 10px;
-        float: right;
-        clear: both;
-    }
-
-    .message-input-panel {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        background-color: #fff;
-        padding: 10px;
-        border-top: 1px solid #ccc;
-    }
-
-    /* Стиль для поля ввода текста */
-    .message-input-text {
-        width:1000px;
-        flex-grow: 1;
-        height: 40px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
-    }
-
-    /* Стиль для кнопки отправки */
-    .message-send-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        margin-left: 10px;
-        cursor: pointer;
-        height: 40px;
-        width: 150px;
-    }
-
-        .message-send-button:hover {
-            background-color: #0056b3;
-        }
-
-</style>
 <div class="chat-container">
     @if (Model != null)
     {
         <div class="messages">
-            @foreach (var message in Model.chat.messages.OrderBy(m => m.Creation_Time))
+            @foreach (var message in Model.chat.messages.ToList())
             {
                 <div class="message @((message.User_id == Model.currentUserId.ToString()) ? "sent" : "received")">
                     <div class="message-username">@Model.chat.users.First(u => u.Id == message.User_id).Username</div>
@@ -117,9 +20,57 @@
             }
         </div>
     }
+
     <div class="message-input-panel">
-            <input type="text" class="message-input-text"  name="messageText" placeholder="Type your message..." />
-            <button class="message-send-button" type="submit">Send</button>
+        <div>
+            <input type="text" class="message-input-text" name="messageText" placeholder="Type your message..." />
+            <button class="message-send-button">Send</button>
+        </div>
     </div>
+
+
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.querySelector(".message-send-button").addEventListener("click", function () {
+        var messageText = document.querySelector(".message-input-text").value;
+
+        connection.invoke("Send", '@Model.chat.Id', '@Model.currentUserId', messageText).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.querySelector(".message-input-text").value = '';
+    });
+
+    connection.on("Receive", function (message, username) {
+
+        var messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", message.user_id == '@Model.currentUserId.ToString()' ? "sent" : "received");
+
+        var usernameDiv = document.createElement("div");
+        usernameDiv.classList.add("message-username");
+        usernameDiv.textContent = username;
+
+        var contentDiv = document.createElement("div");
+        contentDiv.classList.add("message-content");
+        contentDiv.textContent = message.content;
+
+        var timeDiv = document.createElement("div");
+        timeDiv.classList.add("message-time");
+        timeDiv.textContent = message.creation_Time;
+
+        messageDiv.appendChild(usernameDiv);
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeDiv);
+
+        document.querySelector(".messages").appendChild(messageDiv);
+    });
+
+</script>

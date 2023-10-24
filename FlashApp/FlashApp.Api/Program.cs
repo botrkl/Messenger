@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FlashApp.Api.Mapping;
+using FlashApp.Api.SignalRHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services.AddAutoMapper(typeof(WebMappingProfile));
 
 builder.Services.InjectDALServices(builder.Configuration);
 builder.Services.InjectBLLServices(builder.Configuration);
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -74,6 +77,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=AuthController}/{action=Index}");
+    endpoints.MapHub<ChatHub>("/chatter");
 });
 
 app.MapControllers();

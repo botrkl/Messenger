@@ -5,6 +5,7 @@ using FlashApp.BLL.Models;
 using FlashApp.DAL.Entities;
 using FlashApp.DAL.Repositories.Interfaces;
 using FlashApp.BLL.Services.Interfaces;
+using System;
 
 namespace FlashApp.BLL.Services
 {
@@ -53,8 +54,8 @@ namespace FlashApp.BLL.Services
                 {
                     chatId = Guid.Parse(x.Id),
                     username = x.users.First(x => Guid.Parse(x.Id) != userId).Username,
-                    timeOfLastMessage = x.messages?.OrderByDescending(x => x.Creation_Time).FirstOrDefault()?.Creation_Time,
-                    lastMessage = x.messages?.OrderByDescending(x => x.Creation_Time).FirstOrDefault()?.Content ?? "No messages here yet..."
+                    timeOfLastMessage = x.messages?.OrderByDescending(x => DateTime.Parse(x.Creation_Time)).FirstOrDefault()?.Creation_Time,
+                    lastMessage = x.messages?.OrderByDescending(x => DateTime.Parse(x.Creation_Time)).FirstOrDefault()?.Content ?? "No messages here yet..."
                 })
                 .OrderByDescending(x => x.timeOfLastMessage ?? null);
 
@@ -80,7 +81,10 @@ namespace FlashApp.BLL.Services
         public async Task<ChatModel> GetChatByIdWithUsersAndMessegesAsync(Guid chatId)
         {
             var chat = await _chatRepository.GetChatByIdWithUsersAndMessegesAsync(chatId);
-            return _mapper.Map<ChatModel>(chat);
+            var chatMapped = _mapper.Map<ChatModel>(chat);
+            chatMapped.messages = chatMapped.messages?.OrderBy(x => DateTime.Parse(x.Creation_Time)).ToList();
+
+            return chatMapped;
         }
     }
 }
