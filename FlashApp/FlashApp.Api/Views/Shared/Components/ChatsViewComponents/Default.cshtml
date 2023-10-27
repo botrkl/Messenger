@@ -1,26 +1,26 @@
-﻿@using FlashApp.BLL.Models;
-@using FlashApp.Api.ViewComponents;
-@model IEnumerable<ChatShortcut>;
-<link href="~/css/ChatViewComponents_Default.css" rel="stylesheet" />
+﻿    @using FlashApp.BLL.Models;
+    @using FlashApp.Api.ViewComponents;
+    @model IEnumerable<ChatShortcut>;
+    <link href="~/css/ChatViewComponents_Default.css" rel="stylesheet" />
 
-<div class="left-panel">
-    @if (Model.Any())
-    {
-        <div class="chat-item">
-            @foreach (var chat in Model)
-            {
-                <form method="get" action="/chat/@chat.chatId">
-                    <button type="submit" class="chat-button">
-                        <div>
-                            @chat.username
-                            @chat.timeOfLastMessage
-                        </div>
-                        <div>
-                            @chat.lastMessage
-                        </div>
-                    </button>
-                </form>
-            }
-        </div>
-    }
-</div>
+    <div class="left-panel">
+        @if (Model.Any())
+        {
+            <div class="chat-item">
+                @foreach (var chat in Model)
+                {
+                    <form method="get" action="/chat/@chat.chatId">
+                        <button type="submit" class="chat-button">
+                            <div>
+                                @chat.username
+                                @chat.timeOfLastMessage
+                            </div>
+                            <div>
+                                @chat.lastMessage
+                            </div>
+                        </button>
+                    </form>
+                }
+            </div>
+        }
+    </div>

@@ -32,7 +32,15 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+
 <script>
+    function scrollToBottomSmoothly() {
+        window.scroll({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
 
     connection.start().catch(function (err) {
@@ -71,6 +79,9 @@
         messageDiv.appendChild(timeDiv);
 
         document.querySelector(".messages").appendChild(messageDiv);
+
+        scrollToBottomSmoothly();
     });
 
+    scrollToBottomSmoothly();
 </script>

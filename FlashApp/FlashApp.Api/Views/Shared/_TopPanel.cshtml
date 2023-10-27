@@ -8,8 +8,18 @@
         </form>
     </div>
     <div class="user-actions">
-        <a href="~/Chats">chats</a>
         <a href="~/profile">Profile</a>
-        <a href="~/logout">Log Out</a>
+        <button id="logoutButton">Log Out</button>
+
     </div>
 </div>
+<script>
+    document.getElementById("logoutButton").addEventListener("click", function () {
+        fetch("/logout", { method: "POST" })
+            .then(response => {
+                if (response.status === 200) {
+                    window.location.href = "https://localhost:7270/";
+                }
+            });
+    });
+</script>

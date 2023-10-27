@@ -91,5 +91,13 @@ namespace FlashApp.Api.Controllers
                 return View();
             }
         }
+
+        [Route("/logout")]
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("Token");
+            return Ok(); 
+        }
     }
 }
