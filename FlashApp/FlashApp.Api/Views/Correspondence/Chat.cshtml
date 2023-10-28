@@ -13,9 +13,19 @@
             @foreach (var message in Model.chat.messages.ToList())
             {
                 <div class="message @((message.User_id == Model.currentUserId.ToString()) ? "sent" : "received")">
-                    <div class="message-username">@Model.chat.users.First(u => u.Id == message.User_id).Username</div>
-                    <div class="message-content">@message.Content</div>
-                    <div class="message-time">@message.Creation_Time</div>
+                    <div class="message-text"> @message.Content</div>
+                    @if (message.User_id == Model.currentUserId.ToString())
+                    {
+                        <div class="message-options">
+                            <img src="~/images/bin.png" alt="Удалить сообщение" class="option-button" style="cursor: pointer;" width="15" height="15" id="delete-button">
+                            <img src="~/images/pencil.png" alt="Редактировать сообщение" class="option-button" style="cursor: pointer;" width="15" height="15" id="edit-button">
+                            <span class="message-time">@message.Creation_Time</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <span class="message-time">@message.Creation_Time</span>
+                    }
                 </div>
             }
         </div>
@@ -27,13 +37,17 @@
             <button class="message-send-button">Send</button>
         </div>
     </div>
-
-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
 
 <script>
+    document.querySelectorAll(".delete-button").forEach(function (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            console.log("121");
+        });
+    });
+
     function scrollToBottomSmoothly() {
         window.scroll({
             top: document.body.scrollHeight,
@@ -85,3 +99,4 @@
 
     scrollToBottomSmoothly();
 </script>
+

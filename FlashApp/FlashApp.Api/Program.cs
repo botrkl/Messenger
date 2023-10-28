@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FlashApp.Api.Mapping;
 using FlashApp.Api.SignalRHub;
+using FlashApp.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.InjectBLLServices(builder.Configuration);
 
 builder.Services.AddSignalR();
 
+builder.Services.AddScoped<UnauthorizedMiddleware>();
 var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
@@ -67,6 +69,7 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+app.UseMiddleware<UnauthorizedMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

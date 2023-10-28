@@ -8,6 +8,6 @@ namespace FlashApp.Api.Models
         public string Username { get; set; }
 
         [Required(ErrorMessage = "can't be blank!")]
-        public string Password { get; set; }
+        public string Password { get; set; } 
     }
 }
