@@ -12,17 +12,17 @@
         <div class="messages">
             @foreach (var message in Model.chat.messages.ToList())
             {
-                <div class="message @((message.User_id == Model.currentUserId.ToString()) ? "sent" : "received")">
+                <div class="message @((message.User_id == Model.currentUserId.ToString()) ? "sent" : "received")" messageId=@message.Id>
                     <div class="message-text"> @message.Content</div>
                     @if (message.User_id == Model.currentUserId.ToString())
                     {
                         <div class="message-options">
 
-                            <button class="delete-button">
+                            <button class="delete-button" messageId=@message.Id>
                                 <img src="~/images/bin.png" alt="delete" style="cursor: pointer;" width="15" height="15">
                             </button>
 
-                            <button class="edit-button">
+                            <button class="edit-button" messageId=@message.Id>
                                 <img src="~/images/pencil.png" alt="edit" style="cursor: pointer;" width="15" height="15" >
                             </button>
 
@@ -57,23 +57,19 @@
     }
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
-
     connection.start().catch(function (err) {
         return console.error(err.toString());
     });
 
     document.querySelector(".message-send-button").addEventListener("click", function () {
         var messageText = document.querySelector(".message-input-text").value;
-
-        connection.invoke("Send", '@Model.chat.Id', '@Model.currentUserId', messageText).catch(function (err) {
+        connection.invoke("SendMessage", '@Model.chat.Id', '@Model.currentUserId', messageText).catch(function (err) {
             return console.error(err.toString());
         });
-
         document.querySelector(".message-input-text").value = '';
     });
 
-
-    connection.on("Receive", function (message, username) {
+    connection.on("ReceiveMessage", function (message, username) {
 
         var messageDiv = document.createElement("div");
         messageDiv.classList.add("message", message.user_id == '@Model.currentUserId.ToString()' ? "sent" : "received");
@@ -95,13 +91,26 @@
         scrollToBottomSmoothly();
     });
 
+    document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", function () {
+            var messageId = this.getAttribute("messageId");
+            connection.invoke("DeleteMessage", messageId).catch(function (err) {
+                return console.error(err.toString());
+            });
+        });
+    });
+
+    connection.on("DeleteMessageResult", function (messageId) {
+        var messageToDelete = document.querySelector('.message[messageId="' + messageId + '"]');
+        if (messageToDelete) {
+            messageToDelete.remove();
+        }
+    });
+
     scrollToBottomSmoothly();
 </script>
 
 <script>
-    document.querySelectorAll(".delete-button").forEach(button => {
-        button.addEventListener("click", function () { console.log("1"); });
-    });
 
     document.querySelectorAll(".edit-button").forEach(button => {
         button.addEventListener("click", function () { console.log("2"); });

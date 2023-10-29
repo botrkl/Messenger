@@ -13,12 +13,17 @@ namespace FlashApp.Api.SignalRHub
             _messageService = messageService;
             _userService = userService;
         }
-        public async Task Send(string chatId, string userId, string content)
+        public async Task SendMessage(string chatId, string userId, string content)
         {
             var messageId = await _messageService.AddMessageAsync(new AddMessageModel() { Chat_id = chatId, User_id = userId, Content = content });
             var message = await _messageService.GetByIdAsync(messageId);
             var username = (await _userService.GetByIdAsync(Guid.Parse(userId))).Username;
-            await Clients.All.SendAsync("Receive",message, username);
+            await Clients.All.SendAsync("ReceiveMessage", message, username);
+        }
+        public async Task DeleteMessage(string messageId)
+        {
+            await _messageService.DeleteMessageAsync(Guid.Parse(messageId));
+            await Clients.All.SendAsync("DeleteMessageResult", messageId);
         }
     }
 }
