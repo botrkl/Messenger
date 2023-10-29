@@ -17,8 +17,15 @@
                     @if (message.User_id == Model.currentUserId.ToString())
                     {
                         <div class="message-options">
-                            <img src="~/images/bin.png" alt="Удалить сообщение" class="option-button" style="cursor: pointer;" width="15" height="15" id="delete-button">
-                            <img src="~/images/pencil.png" alt="Редактировать сообщение" class="option-button" style="cursor: pointer;" width="15" height="15" id="edit-button">
+
+                            <button class="delete-button">
+                                <img src="~/images/bin.png" alt="delete" style="cursor: pointer;" width="15" height="15">
+                            </button>
+
+                            <button class="edit-button">
+                                <img src="~/images/pencil.png" alt="edit" style="cursor: pointer;" width="15" height="15" >
+                            </button>
+
                             <span class="message-time">@message.Creation_Time</span>
                         </div>
                     }
@@ -42,12 +49,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
 
 <script>
-    document.querySelectorAll(".delete-button").forEach(function (deleteButton) {
-        deleteButton.addEventListener("click", function () {
-            console.log("121");
-        });
-    });
-
     function scrollToBottomSmoothly() {
         window.scroll({
             top: document.body.scrollHeight,
@@ -71,14 +72,11 @@
         document.querySelector(".message-input-text").value = '';
     });
 
+
     connection.on("Receive", function (message, username) {
 
         var messageDiv = document.createElement("div");
         messageDiv.classList.add("message", message.user_id == '@Model.currentUserId.ToString()' ? "sent" : "received");
-
-        var usernameDiv = document.createElement("div");
-        usernameDiv.classList.add("message-username");
-        usernameDiv.textContent = username;
 
         var contentDiv = document.createElement("div");
         contentDiv.classList.add("message-content");
@@ -88,8 +86,8 @@
         timeDiv.classList.add("message-time");
         timeDiv.textContent = message.creation_Time;
 
-        messageDiv.appendChild(usernameDiv);
         messageDiv.appendChild(contentDiv);
+
         messageDiv.appendChild(timeDiv);
 
         document.querySelector(".messages").appendChild(messageDiv);
@@ -100,3 +98,12 @@
     scrollToBottomSmoothly();
 </script>
 
+<script>
+    document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", function () { console.log("1"); });
+    });
+
+    document.querySelectorAll(".edit-button").forEach(button => {
+        button.addEventListener("click", function () { console.log("2"); });
+    });
+</script>

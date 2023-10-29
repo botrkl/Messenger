@@ -35,10 +35,19 @@
     justify-content: space-between;
 }
 
-.option-button {
-    margin-right: 5px;
+.edit-button {
+    margin-right: 0px;
     cursor: pointer;
     float: right;
+    background-color: transparent;
+    border: 0;
+}
+.delete-button {
+    margin-right: 0px;
+    cursor: pointer;
+    float: right;
+    background-color: transparent;
+    border: 0;
 }
 
 .message-time {
@@ -60,7 +69,6 @@
         float: left;
         clear: both;
     }
-
 
 
 .message-input-panel {

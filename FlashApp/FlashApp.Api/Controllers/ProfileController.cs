@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlashApp.Api.Controllers
 {
+    [ApiController]
     [Authorize]
     public class ProfileController : Controller
     {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlashApp.Api.Controllers
 {
+    [ApiController]
     public class AuthController : Controller
     {
         private IAuthenticationService _authenticationService;

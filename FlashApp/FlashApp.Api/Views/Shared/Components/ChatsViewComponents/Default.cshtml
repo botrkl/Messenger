@@ -16,7 +16,15 @@
                                 @chat.timeOfLastMessage
                             </div>
                             <div>
-                                @chat.lastMessage
+                            @if (chat.lastMessage.Length >= 85)
+                            {
+                                var truncatedMessage = new string(chat.lastMessage.Take(82).ToArray());
+                                @string.Concat(truncatedMessage, "...");
+                            }
+                            else
+                            {
+                                @chat.lastMessage;
+                            }
                             </div>
                         </button>
                     </form>
